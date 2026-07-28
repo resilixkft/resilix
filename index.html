@@ -185,12 +185,6 @@
     object-fit:cover;
   }
 
-  .fact-row{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:16px;
-    margin-top: clamp(40px, 5vw, 56px);
-  }
   .fact-card{
     display:flex;
     align-items:center;
@@ -355,7 +349,6 @@
     main{ padding-top: clamp(32px, 8vw, 56px); }
     p.lede, p.body-text{ max-width:none; }
     .section-caption{ margin-top:36px; }
-    .fact-row{ grid-template-columns:1fr; }
   }
 
   @media (max-width: 560px){
@@ -449,30 +442,6 @@
         </div>
         <div class="hero-visual">
           <img src="hero-datacenter.jpg" alt="RESILIX-managed data center corridor with server racks">
-        </div>
-      </div>
-
-      <div class="fact-row">
-        <div class="fact-card">
-          <div class="fact-icon"><span></span><span></span><span></span></div>
-          <div class="fact-body">
-            <span class="label">What we do</span>
-            <span class="value">IT delivery &amp; services</span>
-          </div>
-        </div>
-        <div class="fact-card">
-          <div class="fact-icon"><span></span><span></span><span></span></div>
-          <div class="fact-body">
-            <span class="label">Based</span>
-            <span class="value">Budapest, Hungary</span>
-          </div>
-        </div>
-        <div class="fact-card">
-          <div class="fact-icon"><span></span><span></span><span></span></div>
-          <div class="fact-body">
-            <span class="label">Status</span>
-            <span class="value">Site in progress</span>
-          </div>
         </div>
       </div>
     </section>
