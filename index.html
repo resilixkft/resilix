@@ -159,25 +159,8 @@
     display:grid;
     grid-template-columns: minmax(0,1.5fr) minmax(0,1fr);
     gap: clamp(40px, 6vw, 96px);
-    align-items:start;
-    position:relative;
+    align-items:center;
   }
-  .hero-mark{
-    position:absolute;
-    top:-70px;
-    right:-90px;
-    width:460px;
-    display:flex;
-    flex-direction:column;
-    gap:150px;
-    transform:rotate(-9deg);
-    pointer-events:none;
-    z-index:0;
-  }
-  .hero-mark span{ display:block; height:64px; border-radius:4px; }
-  .hero-mark span.top,.hero-mark span.bottom{ width:100%; background:var(--navy); opacity:.05; }
-  .hero-mark span.mid{ width:60%; background:var(--blue); opacity:.08; }
-  .intro-grid > *{ position:relative; z-index:1; }
 
   .fact-list{ display:flex; flex-direction:column; gap:14px; }
   .fact-card{
@@ -335,7 +318,6 @@
   /* ---------- responsive ---------- */
   @media (max-width: 900px){
     .intro-grid{ grid-template-columns:1fr; }
-    .hero-mark{ display:none; }
     h1{ max-width:none; }
     .process-grid{ grid-template-columns:1fr; }
     .focus-grid{ grid-template-columns:1fr; }
@@ -428,11 +410,6 @@
   <main>
     <section class="panel" id="panel-introduction" role="tabpanel">
       <div class="intro-grid">
-        <div class="hero-mark" aria-hidden="true">
-          <span class="top"></span>
-          <span class="mid"></span>
-          <span class="bottom"></span>
-        </div>
         <div>
           <p class="eyebrow">Introduction</p>
           <h1>IT delivery and services, built to hold under pressure.</h1>
