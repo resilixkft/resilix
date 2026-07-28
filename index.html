@@ -62,6 +62,15 @@
     height:auto;
     display:block;
   }
+  .brand{ display:flex; flex-direction:column; gap:8px; }
+  .motto{
+    font-family:'Newsreader', Georgia, serif;
+    font-style:italic;
+    font-size:12.5px;
+    letter-spacing:.2px;
+    color:var(--muted);
+    margin:0;
+  }
 
   nav.tabs{ display:flex; gap:6px; flex-wrap:wrap; }
   nav.tabs button{
@@ -161,8 +170,27 @@
     gap: clamp(40px, 6vw, 96px);
     align-items:center;
   }
+  .hero-visual{
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:#fff;
+    overflow:hidden;
+    box-shadow: var(--card-shadow);
+    aspect-ratio: 4 / 3;
+  }
+  .hero-visual img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+  }
 
-  .fact-list{ display:flex; flex-direction:column; gap:14px; }
+  .fact-row{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+    margin-top: clamp(40px, 5vw, 56px);
+  }
   .fact-card{
     display:flex;
     align-items:center;
@@ -327,6 +355,7 @@
     main{ padding-top: clamp(32px, 8vw, 56px); }
     p.lede, p.body-text{ max-width:none; }
     .section-caption{ margin-top:36px; }
+    .fact-row{ grid-template-columns:1fr; }
   }
 
   @media (max-width: 560px){
@@ -353,7 +382,8 @@
     <div class="accent-bar"></div>
 
     <header>
-      <div class="logo-wrap">
+      <div class="brand">
+        <div class="logo-wrap">
 <svg viewBox="0 0 1000 260" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
@@ -384,6 +414,8 @@
   <text x="318" y="195" class="word" fill="#0D1B2A">SILIX</text>
 </svg>
 
+        </div>
+        <p class="motto">Resilient IT. Stronger business</p>
       </div>
 
       <nav class="tabs" role="tablist" aria-label="Site sections">
@@ -415,27 +447,31 @@
           <h1>IT delivery and services, built to hold under pressure.</h1>
           <p class="body-text">RESILIX plans, builds, and runs the systems your business depends on — delivered by people who stay accountable after go-live, not just through the handoff.</p>
         </div>
-        <div class="fact-list">
-          <div class="fact-card">
-            <div class="fact-icon"><span></span><span></span><span></span></div>
-            <div class="fact-body">
-              <span class="label">What we do</span>
-              <span class="value">IT delivery &amp; services</span>
-            </div>
+        <div class="hero-visual">
+          <img src="hero-datacenter.jpg" alt="RESILIX-managed data center corridor with server racks">
+        </div>
+      </div>
+
+      <div class="fact-row">
+        <div class="fact-card">
+          <div class="fact-icon"><span></span><span></span><span></span></div>
+          <div class="fact-body">
+            <span class="label">What we do</span>
+            <span class="value">IT delivery &amp; services</span>
           </div>
-          <div class="fact-card">
-            <div class="fact-icon"><span></span><span></span><span></span></div>
-            <div class="fact-body">
-              <span class="label">Based</span>
-              <span class="value">Budapest, Hungary</span>
-            </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon"><span></span><span></span><span></span></div>
+          <div class="fact-body">
+            <span class="label">Based</span>
+            <span class="value">Budapest, Hungary</span>
           </div>
-          <div class="fact-card">
-            <div class="fact-icon"><span></span><span></span><span></span></div>
-            <div class="fact-body">
-              <span class="label">Status</span>
-              <span class="value">Site in progress</span>
-            </div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon"><span></span><span></span><span></span></div>
+          <div class="fact-body">
+            <span class="label">Status</span>
+            <span class="value">Site in progress</span>
           </div>
         </div>
       </div>
