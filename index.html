@@ -16,7 +16,12 @@
     --paper:#FFFFFF;
     --line:#E4E7EB;
     --muted:#5B6472;
+    --ink:#3D4A59;
+    --blue-tint: rgba(0,102,204,0.07);
+    --blue-tint-soft: rgba(0,102,204,0.045);
+    --navy-tint: rgba(13,27,42,0.04);
     --pad: clamp(20px, 5vw, 72px);
+    --card-shadow: 0 20px 40px -26px rgba(13,27,42,.20);
   }
   *{box-sizing:border-box;}
   html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
@@ -31,16 +36,16 @@
     flex-direction:column;
     overflow-x:hidden;
   }
-  .topbar{
-    background:#fff;
-  }
+  :focus-visible{ outline:2px solid var(--blue); outline-offset:3px; border-radius:2px; }
+
+  /* ---------- top bar ---------- */
+  .topbar{ background:#fff; }
   .accent-bar{
     height:5px;
     width:100%;
     background: linear-gradient(90deg, var(--navy) 0 62%, var(--blue) 62% 78%, var(--navy) 78% 100%);
     flex:0 0 auto;
   }
-
   header{
     flex:0 0 auto;
     display:flex;
@@ -48,265 +53,316 @@
     justify-content:space-between;
     gap:24px;
     flex-wrap:wrap;
-    padding: clamp(14px, 3vw, 34px) var(--pad);
+    padding: clamp(14px, 3vw, 30px) var(--pad);
     border-bottom:1px solid var(--line);
     background:#fff;
   }
   .logo-wrap svg{
-    width: clamp(120px, 14vw, 200px);
+    width: clamp(120px, 14vw, 192px);
     height:auto;
     display:block;
   }
 
-  nav.tabs{
-    display:flex;
-    gap: clamp(16px, 2.6vw, 32px);
-    flex-wrap:wrap;
-  }
+  nav.tabs{ display:flex; gap:6px; flex-wrap:wrap; }
   nav.tabs button{
     font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-    font-size:12.5px;
-    letter-spacing:2.5px;
+    font-size:12px;
+    letter-spacing:2px;
     text-transform:uppercase;
     color:var(--muted);
-    background:none;
+    background:transparent;
     border:none;
-    border-bottom:1px solid transparent;
+    border-radius:999px;
     cursor:pointer;
-    padding:10px 2px;
+    padding:11px 18px;
     min-height:44px;
     display:flex;
     align-items:center;
-    gap:8px;
-    transition:color .15s ease, border-color .15s ease;
+    gap:9px;
+    transition:color .15s ease, background-color .15s ease;
     white-space:nowrap;
     touch-action:manipulation;
   }
-  nav.tabs button:hover{ color:var(--navy); border-color:var(--line); }
-  nav.tabs button[aria-selected="true"]{ border-color:var(--blue); }
-  nav.tabs button .mark{
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-    opacity:0;
-    transition:opacity .15s ease;
-  }
-  nav.tabs button .mark span{
-    display:block;
-    height:2px;
-    background:var(--blue);
-  }
+  nav.tabs button:hover{ color:var(--navy); background:var(--navy-tint); }
+  nav.tabs button[aria-selected="true"]{ color:var(--navy); background:var(--blue-tint); }
+  nav.tabs button .mark{ display:flex; flex-direction:column; gap:2px; opacity:.35; transition:opacity .15s ease; }
+  nav.tabs button .mark span{ display:block; height:2px; background:var(--blue); }
   nav.tabs button .mark span:nth-child(1){width:12px;}
   nav.tabs button .mark span:nth-child(2){width:7px;}
   nav.tabs button .mark span:nth-child(3){width:12px;}
-  nav.tabs button[aria-selected="true"]{ color:var(--navy); }
   nav.tabs button[aria-selected="true"] .mark{ opacity:1; }
 
+  /* ---------- main / panels ---------- */
   main{
     position:relative;
     flex:1 1 auto;
     display:flex;
-    align-items:center;
-    padding: clamp(48px, 8vw, 120px) var(--pad);
-    overflow:hidden;
-  }
-  main::after{
-    content:"";
-    position:absolute;
-    top:-10%;
-    right:-6%;
-    width:min(46vw, 620px);
-    height:min(46vw, 620px);
-    background: radial-gradient(circle, rgba(0,102,204,0.06) 0%, rgba(0,102,204,0) 70%);
-    pointer-events:none;
+    align-items:flex-start;
+    padding: clamp(48px, 7vw, 96px) var(--pad) clamp(64px, 9vw, 120px);
   }
 
-  .panel{
-    display:grid;
-    grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
-    gap: clamp(32px, 6vw, 96px);
-    align-items:start;
-    width:100%;
-    max-width:1400px;
-    margin:0 auto;
-  }
+  .panel{ width:100%; max-width:1200px; margin:0 auto; }
   .panel[hidden]{ display:none; }
+  .panel:not([hidden]){ animation: panelIn .4s ease both; }
+  @keyframes panelIn{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:translateY(0);} }
 
   .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
     font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
     font-size:11px;
-    letter-spacing:3px;
+    letter-spacing:2.2px;
     text-transform:uppercase;
     color:var(--blue);
-    margin:0 0 20px;
-    display:flex;
-    align-items:center;
-    gap:10px;
+    background:var(--blue-tint);
+    border-radius:999px;
+    padding:7px 16px 7px 13px;
+    margin:0 0 26px;
   }
-  .eyebrow::before{
-    content:"";
-    display:block;
-    width:22px;
-    height:2px;
-    background:var(--blue);
-  }
+  .eyebrow::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--blue); flex:0 0 auto; }
+
   h1{
     font-weight:500;
-    font-size: clamp(30px, 4.4vw, 52px);
-    line-height:1.22;
+    font-size: clamp(32px, 4.6vw, 54px);
+    line-height:1.2;
     letter-spacing:-0.01em;
-    margin:0 0 24px;
+    margin:0 0 22px;
     color:var(--navy);
     max-width:15ch;
   }
+  h2.section-title{
+    font-weight:500;
+    font-size: clamp(24px, 2.8vw, 32px);
+    line-height:1.3;
+    margin:0 0 18px;
+    color:var(--navy);
+    max-width:22ch;
+  }
+  p.lede{
+    font-size: clamp(17px, 1.3vw, 20px);
+    line-height:1.7;
+    color:var(--navy);
+    margin:0 0 14px;
+    max-width:62ch;
+  }
   p.body-text{
-    font-size: clamp(15.5px, 1.15vw, 18px);
+    font-size: clamp(15.5px, 1.1vw, 17px);
     line-height:1.8;
-    color:#3D4A59;
-    margin:0 0 16px;
-    max-width:50ch;
+    color:var(--ink);
+    margin:0 0 14px;
+    max-width:62ch;
   }
 
-  .side{
-    border-left:1px solid var(--line);
-    padding-left: clamp(24px, 3vw, 48px);
+  /* ---------- hero (introduction) ---------- */
+  .intro-grid{
+    display:grid;
+    grid-template-columns: minmax(0,1.5fr) minmax(0,1fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items:start;
+    position:relative;
+  }
+  .hero-mark{
+    position:absolute;
+    top:-70px;
+    right:-90px;
+    width:460px;
     display:flex;
     flex-direction:column;
-    gap:22px;
+    gap:150px;
+    transform:rotate(-9deg);
+    pointer-events:none;
+    z-index:0;
   }
-  .side .field{ display:flex; flex-direction:column; gap:6px; }
-  .side .field span.label{
+  .hero-mark span{ display:block; height:64px; border-radius:4px; }
+  .hero-mark span.top,.hero-mark span.bottom{ width:100%; background:var(--navy); opacity:.05; }
+  .hero-mark span.mid{ width:60%; background:var(--blue); opacity:.08; }
+  .intro-grid > *{ position:relative; z-index:1; }
+
+  .fact-list{ display:flex; flex-direction:column; gap:14px; }
+  .fact-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px 18px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#fff;
+  }
+  .fact-icon{
+    flex:0 0 auto;
+    width:36px; height:36px;
+    border-radius:10px;
+    background:var(--blue-tint);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:3px;
+    padding-left:9px;
+  }
+  .fact-icon span{ display:block; height:2.5px; border-radius:1px; background:var(--navy); }
+  .fact-icon span:nth-child(2){ background:var(--blue); width:8px; }
+  .fact-icon span:nth-child(1),.fact-icon span:nth-child(3){ width:16px; }
+  .fact-body{ display:flex; flex-direction:column; gap:3px; }
+  .fact-body .label{
     font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
-    font-size:11px;
-    letter-spacing:1.5px;
+    font-size:10.5px;
+    letter-spacing:1.4px;
     text-transform:uppercase;
     color:var(--muted);
   }
-  .side .field span.value{
-    font-size:16px;
-    color:var(--navy);
-    font-family:'Newsreader', Georgia, serif;
-  }
+  .fact-body .value{ font-size:15.5px; color:var(--navy); }
 
-  .placeholder{
-    grid-column: 1 / -1;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:14px;
-    padding-top: 6px;
-  }
-  .placeholder .dashline{
-    width:100%;
-    height:1px;
-    background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 12px);
-  }
-  .placeholder p{
+  /* ---------- section captions & dividers ---------- */
+  .section-caption{
+    display:block;
     font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
-    font-size:13px;
-    letter-spacing:.3px;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
     color:var(--muted);
-    margin:0;
+    margin: 46px 0 20px;
   }
-  .contact-details{
+  .panel-body > .section-caption:first-of-type{ margin-top:38px; }
+
+  /* ---------- process steps ---------- */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .step-card{
+    padding:26px 24px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .step-card:hover{ box-shadow:var(--card-shadow); transform:translateY(-3px); }
+  .step-num{
+    font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
+    font-size:12px;
+    letter-spacing:1.5px;
+    color:var(--blue);
+    display:block;
+    margin-bottom:14px;
+  }
+  .step-card h3{ font-size:19px; font-weight:500; margin:0 0 10px; color:var(--navy); }
+  .step-card p{ font-size:14px; line-height:1.7; color:var(--ink); margin:0; }
+
+  /* ---------- focus area cards ---------- */
+  .focus-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:22px;
+  }
+  .focus-card{
+    padding:26px 24px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:14px;
+    transition: box-shadow .2s ease, transform .2s ease;
   }
-  .contact-details p{
-    font-family:'Newsreader', Georgia, serif;
-    font-size:16px;
-    letter-spacing:0;
+  .focus-card:hover{ box-shadow:var(--card-shadow); transform:translateY(-3px); }
+  .focus-icon{
+    width:42px; height:42px;
+    border-radius:11px;
+    background:var(--blue-tint);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:4px;
+    padding-left:11px;
+  }
+  .focus-icon span{ display:block; height:3px; border-radius:1px; background:var(--navy); }
+  .focus-icon span:nth-child(2){ background:var(--blue); width:9px; }
+  .focus-icon span:nth-child(1),.focus-icon span:nth-child(3){ width:19px; }
+  .focus-card h3{ font-size:18px; font-weight:500; margin:0; color:var(--navy); }
+  .focus-card p{ font-size:14px; line-height:1.7; color:var(--ink); margin:0; }
+
+  /* ---------- pull-quote / closing statement ---------- */
+  .quote-block{
+    border-left:3px solid var(--blue);
+    padding:2px 0 2px 26px;
+    margin-top:44px;
+    max-width:64ch;
+  }
+  .quote-block p{
+    font-style:italic;
+    font-size: clamp(16.5px, 1.4vw, 19px);
+    line-height:1.75;
     color:var(--navy);
+    margin:0 0 10px;
+  }
+  .quote-block p:last-child{ margin-bottom:0; }
+
+  #panel-work .quote-block{ margin-top:0; }
+  #panel-work .quote-block p{ font-size: clamp(20px, 2.2vw, 25px); line-height:1.6; }
+
+  /* ---------- contact ---------- */
+  .contact-card{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    max-width:440px;
   }
 
+  /* ---------- footer ---------- */
   footer{
     flex:0 0 auto;
     display:flex;
     justify-content:space-between;
     align-items:baseline;
-    padding: 18px var(--pad);
+    padding: 20px var(--pad);
     border-top:1px solid var(--line);
     font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
     font-size:11px;
-    letter-spacing:1.5px;
+    letter-spacing:1.2px;
     text-transform:uppercase;
     color:var(--muted);
     flex-wrap:wrap;
     gap:10px;
   }
-  footer .bars{
-    display:flex;
-    gap:3px;
-    align-items:center;
-  }
-  footer .bars span{
-    display:block;
-    width:14px;
-    height:2px;
-    background:var(--navy);
-  }
+  footer .foot-left{ display:flex; flex-direction:column; gap:4px; }
+  footer .copyright{ font-size:10px; letter-spacing:1px; color:#9aa2ab; }
+  footer .bars{ display:flex; gap:3px; align-items:center; }
+  footer .bars span{ display:block; width:14px; height:2px; background:var(--navy); }
   footer .bars span:nth-child(2){ width:9px; background:var(--blue); }
 
-  @media (max-width: 860px){
-    .panel{ grid-template-columns: 1fr; }
-    .side{
-      border-left:none;
-      border-top:1px solid var(--line);
-      padding-left:0;
-      padding-top:24px;
-      flex-direction:row;
-      flex-wrap:wrap;
-      gap: 28px;
-    }
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    .intro-grid{ grid-template-columns:1fr; }
+    .hero-mark{ display:none; }
     h1{ max-width:none; }
+    .process-grid{ grid-template-columns:1fr; }
+    .focus-grid{ grid-template-columns:1fr; }
   }
 
   @media (max-width: 640px){
-    main{
-      padding-top: clamp(32px, 8vw, 56px);
-      padding-bottom: clamp(32px, 8vw, 56px);
-      align-items:flex-start;
-    }
-    main::after{ width:70vw; height:70vw; top:-15%; right:-20%; }
-    .panel{ gap:32px; }
-    p.body-text{ max-width:none; }
+    main{ padding-top: clamp(32px, 8vw, 56px); }
+    p.lede, p.body-text{ max-width:none; }
+    .section-caption{ margin-top:36px; }
   }
 
   @media (max-width: 560px){
-    header{
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
-      text-align:center;
-    }
-    nav.tabs{
-      justify-content:center;
-      width:100%;
-      gap:22px;
-      row-gap:2px;
-    }
-    footer{
-      flex-direction:column;
-      align-items:flex-start;
-      gap:14px;
-    }
-    .side{
-      flex-direction:column;
-      gap:16px;
-      padding-top:20px;
-    }
-    .side .field{ gap:4px; }
+    header{ flex-direction:column; align-items:center; gap:14px; text-align:center; }
+    nav.tabs{ justify-content:center; width:100%; }
+    footer{ flex-direction:column; align-items:flex-start; gap:14px; }
   }
 
   @media (max-width: 380px){
-    nav.tabs{ gap:16px; }
-    nav.tabs button{ font-size:11.5px; letter-spacing:1.8px; }
-    h1{ font-size:26px; }
+    nav.tabs{ gap:2px; }
+    nav.tabs button{ font-size:11px; letter-spacing:1.4px; padding:10px 12px; }
+    h1{ font-size:27px; }
   }
 
   @media (prefers-reduced-motion: reduce){
-    * { transition:none !important; }
+    *{ transition:none !important; }
+    .panel:not([hidden]){ animation:none !important; }
+    .step-card:hover, .focus-card:hover{ transform:none !important; }
   }
 </style>
 </head>
@@ -371,60 +427,143 @@
 
   <main>
     <section class="panel" id="panel-introduction" role="tabpanel">
-      <div>
-        <p class="eyebrow">Introduction</p>
-        <h1>IT delivery and services, built to hold under pressure.</h1>
-        <p class="body-text">RESILIX plans, builds, and runs the systems your business depends on — delivered by people who stay accountable after go-live, not just through the handoff.</p>
-      </div>
-      <div class="side">
-        <div class="field">
-          <span class="label">What we do</span>
-          <span class="value">IT delivery &amp; services</span>
+      <div class="intro-grid">
+        <div class="hero-mark" aria-hidden="true">
+          <span class="top"></span>
+          <span class="mid"></span>
+          <span class="bottom"></span>
         </div>
-        <div class="field">
-          <span class="label">Based</span>
-          <span class="value">Budapest, Hungary</span>
+        <div>
+          <p class="eyebrow">Introduction</p>
+          <h1>IT delivery and services, built to hold under pressure.</h1>
+          <p class="body-text">RESILIX plans, builds, and runs the systems your business depends on — delivered by people who stay accountable after go-live, not just through the handoff.</p>
         </div>
-        <div class="field">
-          <span class="label">Status</span>
-          <span class="value">Site in progress</span>
+        <div class="fact-list">
+          <div class="fact-card">
+            <div class="fact-icon"><span></span><span></span><span></span></div>
+            <div class="fact-body">
+              <span class="label">What we do</span>
+              <span class="value">IT delivery &amp; services</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon"><span></span><span></span><span></span></div>
+            <div class="fact-body">
+              <span class="label">Based</span>
+              <span class="value">Budapest, Hungary</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon"><span></span><span></span><span></span></div>
+            <div class="fact-body">
+              <span class="label">Status</span>
+              <span class="value">Site in progress</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="panel" id="panel-services" role="tabpanel" hidden>
-      <div class="placeholder">
-        <p class="eyebrow" style="margin-bottom:0;">Services</p>
-        <div class="dashline"></div>
-        <p>Content coming soon.</p>
+      <div class="panel-body">
+        <p class="eyebrow">Services</p>
+        <p class="lede">RESILIX designs, plans, and delivers datacenter solutions built around one goal: systems that stay reliable under real-world pressure.</p>
+        <p class="body-text">We work across the full lifecycle of your infrastructure, from the first assessment through to hands-on delivery and beyond.</p>
+
+        <span class="section-caption">Our process</span>
+        <div class="process-grid">
+          <div class="step-card">
+            <span class="step-num">01</span>
+            <h3>Assessment</h3>
+            <p>Every engagement starts with a thorough evaluation of what's already in place — hardware, network topology, security posture, backup coverage, and overall system health. That assessment gives us a clear, honest picture of where things stand and where the risks are hiding.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">02</span>
+            <h3>Planning</h3>
+            <p>We translate findings into a concrete roadmap rather than a generic checklist, accounting for your actual growth trajectory, budget constraints, and operational realities. Good planning is what separates infrastructure that merely works today from infrastructure that still works in three years.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">03</span>
+            <h3>Delivery</h3>
+            <p>Once a plan is agreed, our delivery teams take it from paper to production, configuring and deploying systems with the same accountability we bring to assessment and planning.</p>
+          </div>
+        </div>
+
+        <span class="section-caption">Focus areas</span>
+        <div class="focus-grid">
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Networking</h3>
+            <p>We design and implement network architectures that are fast, segmented, and resilient to failure, whether that means a redesigned core switching layer or a rebuilt WAN strategy.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Security</h3>
+            <p>Security runs through everything we touch rather than sitting as an afterthought bolted on at the end. We harden systems at the network, server, and access layers, and build monitoring into deployments so issues get caught early.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Backup &amp; Disaster Recovery</h3>
+            <p>Backup and disaster recovery are treated as first-class requirements, not optional add-ons — we design backup strategies that are tested, verified, and actually restorable when you need them.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Servers &amp; Storage</h3>
+            <p>Our server work spans physical and virtualized environments, from initial provisioning to ongoing performance tuning and lifecycle management. On the storage side, we help clients choose the right architecture for their workload, balancing performance, capacity, and cost.</p>
+          </div>
+        </div>
+
+        <div class="quote-block">
+          <p>Throughout every project, our focus stays on resilience: systems designed to absorb failure gracefully instead of collapsing under it. We don't disappear after go-live — we stay accountable for what we build, because a datacenter solution is only as good as its performance six months or six years down the line.</p>
+          <p>Whether you're modernizing legacy infrastructure, building a new environment from scratch, or shoring up gaps in an existing setup, our approach stays the same: assess honestly, plan deliberately, and deliver systems you can actually depend on.</p>
+        </div>
       </div>
     </section>
 
     <section class="panel" id="panel-work" role="tabpanel" hidden>
-      <div class="placeholder">
-        <p class="eyebrow" style="margin-bottom:0;">Partnerships</p>
-        <div class="dashline"></div>
-        <div class="contact-details">
+      <div class="panel-body">
+        <p class="eyebrow">Partnerships</p>
+        <div class="quote-block">
           <p>We value strong vendor partnerships, working alongside partners we trust to deliver on what we promise.</p>
         </div>
       </div>
     </section>
 
     <section class="panel" id="panel-contact" role="tabpanel" hidden>
-      <div class="placeholder">
-        <p class="eyebrow" style="margin-bottom:0;">Contact</p>
-        <div class="dashline"></div>
-        <div class="contact-details">
-          <p>Resilix Informatika Kft.</p>
-          <p>VAT number: 32055157-2-13</p>
-          <p>info AT resilix DOT hu</p>
+      <div class="panel-body">
+        <p class="eyebrow">Contact</p>
+        <div class="contact-card">
+          <div class="fact-card">
+            <div class="fact-icon"><span></span><span></span><span></span></div>
+            <div class="fact-body">
+              <span class="label">Company</span>
+              <span class="value">Resilix Informatika Kft.</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon"><span></span><span></span><span></span></div>
+            <div class="fact-body">
+              <span class="label">VAT number</span>
+              <span class="value">32055157-2-13</span>
+            </div>
+          </div>
+          <div class="fact-card">
+            <div class="fact-icon"><span></span><span></span><span></span></div>
+            <div class="fact-body">
+              <span class="label">Email</span>
+              <span class="value">info AT resilix DOT hu</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <span>RESILIX &middot; IT delivery &amp; services</span>
+    <div class="foot-left">
+      <span>RESILIX &middot; IT delivery &amp; services</span>
+      <span class="copyright">&copy; 2026 RESILIX.</span>
+    </div>
     <span class="bars"><span></span><span></span><span></span></span>
   </footer>
 
