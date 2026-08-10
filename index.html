@@ -149,7 +149,7 @@
   h1.hero-title .accent{
     display:block;
     margin:6px 0 0 clamp(24px, 6vw, 72px);
-    color:var(--blue);
+    color:#004C99;
     font-style:italic;
     font-family:'Newsreader', Georgia, serif;
   }
@@ -205,29 +205,6 @@
     object-fit:cover;
   }
 
-  .fact-card{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:16px 18px;
-    border:1px solid var(--line);
-    border-radius:12px;
-    background:#fff;
-  }
-  .fact-icon{
-    flex:0 0 auto;
-    width:36px; height:36px;
-    border-radius:10px;
-    background:var(--blue-tint);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:3px;
-    padding-left:9px;
-  }
-  .fact-icon span{ display:block; height:2.5px; border-radius:1px; background:var(--navy); }
-  .fact-icon span:nth-child(2){ background:var(--blue); width:8px; }
-  .fact-icon span:nth-child(1),.fact-icon span:nth-child(3){ width:16px; }
   .fact-body{ display:flex; flex-direction:column; gap:3px; }
   .fact-body .label{
     font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
@@ -331,7 +308,7 @@
   .contact-card{
     display:flex;
     flex-direction:column;
-    gap:14px;
+    gap:18px;
     max-width:440px;
   }
 
@@ -532,26 +509,17 @@
     <section class="panel" id="panel-contact" role="tabpanel" hidden>
       <div class="panel-body">
         <div class="contact-card">
-          <div class="fact-card">
-            <div class="fact-icon"><span></span><span></span><span></span></div>
-            <div class="fact-body">
-              <span class="label">Company</span>
-              <span class="value">Resilix Informatika Kft.</span>
-            </div>
+          <div class="fact-body">
+            <span class="label">Company</span>
+            <span class="value">Resilix Informatika Kft.</span>
           </div>
-          <div class="fact-card">
-            <div class="fact-icon"><span></span><span></span><span></span></div>
-            <div class="fact-body">
-              <span class="label">VAT number</span>
-              <span class="value">32055157-2-13</span>
-            </div>
+          <div class="fact-body">
+            <span class="label">VAT number</span>
+            <span class="value">32055157-2-13</span>
           </div>
-          <div class="fact-card">
-            <div class="fact-icon"><span></span><span></span><span></span></div>
-            <div class="fact-body">
-              <span class="label">Email</span>
-              <span class="value">info AT resilix DOT hu</span>
-            </div>
+          <div class="fact-body">
+            <span class="label">Email</span>
+            <span class="value">info AT resilix DOT hu</span>
           </div>
         </div>
       </div>
