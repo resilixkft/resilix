@@ -221,31 +221,6 @@
   .panel-body > .section-caption:first-of-type{ margin-top:38px; }
   .focus-grid + p.body-text{ margin-top:38px; }
 
-  /* ---------- process steps ---------- */
-  .process-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:22px;
-  }
-  .step-card{
-    padding:26px 24px;
-    border:1px solid var(--line);
-    border-radius:14px;
-    background:#fff;
-    transition: box-shadow .2s ease, transform .2s ease;
-  }
-  .step-card:hover{ box-shadow:var(--card-shadow); transform:translateY(-3px); }
-  .step-num{
-    font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
-    font-size:12px;
-    letter-spacing:1.5px;
-    color:var(--blue);
-    display:block;
-    margin-bottom:14px;
-  }
-  .step-card h3{ font-size:19px; font-weight:500; margin:0 0 10px; color:var(--navy); }
-  .step-card p{ font-size:14px; line-height:1.7; color:var(--ink); margin:0; }
-
   /* ---------- focus area cards ---------- */
   .focus-grid{
     display:grid;
@@ -313,7 +288,6 @@
   @media (max-width: 900px){
     .intro-grid{ grid-template-columns:1fr; }
     h1{ max-width:none; }
-    .process-grid{ grid-template-columns:1fr; }
     .focus-grid{ grid-template-columns:1fr; }
   }
 
@@ -339,7 +313,7 @@
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; }
     .panel:not([hidden]){ animation:none !important; }
-    .step-card:hover, .focus-card:hover{ transform:none !important; }
+    .focus-card:hover{ transform:none !important; }
   }
 </style>
 </head>
@@ -401,6 +375,10 @@
           <span class="mark"><span></span><span></span><span></span></span>
           Contact
         </button>
+        <button role="tab" aria-selected="false" data-tab="about">
+          <span class="mark"><span></span><span></span><span></span></span>
+          About Resilix
+        </button>
       </nav>
     </header>
   </div>
@@ -423,22 +401,27 @@
       <div class="panel-body">
         <p class="body-text">Resilix designs, plans, and delivers datacenter solutions built around one goal: systems that stay reliable under real-world pressure. We work across the full lifecycle of your infrastructure, from the first assessment through to hands-on delivery and beyond.</p>
 
-        <span class="section-caption">Our process</span>
-        <div class="process-grid">
-          <div class="step-card">
-            <span class="step-num">01</span>
-            <h3>Assessment</h3>
-            <p>Every engagement starts with a thorough evaluation of what's already in place — hardware, network topology, security posture, backup coverage, and overall system health. That assessment gives us a clear, honest picture of where things stand and where the risks are hiding.</p>
+        <span class="section-caption">Our services</span>
+        <div class="focus-grid">
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>L1 and L2 maintenance support.</h3>
+            <p>Our L1 and L2 teams handle day-to-day incidents and escalations, keeping your systems running and responding quickly whenever something needs attention.</p>
           </div>
-          <div class="step-card">
-            <span class="step-num">02</span>
-            <h3>Planning</h3>
-            <p>We translate findings into a concrete roadmap rather than a generic checklist, accounting for your actual growth trajectory, budget constraints, and operational realities. Good planning is what separates infrastructure that merely works today from infrastructure that still works in three years.</p>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Assessment of existing infrastructure.</h3>
+            <p>We evaluate what's already in place — hardware, network topology, security posture, backup coverage, and overall system health — for a clear, honest picture of where things stand and where the risks are hiding.</p>
           </div>
-          <div class="step-card">
-            <span class="step-num">03</span>
-            <h3>Delivery</h3>
-            <p>Once a plan is agreed, our delivery teams take it from paper to production, configuring and deploying systems with the same accountability we bring to assessment and planning.</p>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>IT infrastructure planning and delivery.</h3>
+            <p>We translate findings into a concrete roadmap and take it from paper to production, configuring and deploying systems with the same accountability throughout, so what works today still works in three years.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Hardening.</h3>
+            <p>We harden systems at the network, server, and access layers, closing common attack paths and reducing exposure before issues can turn into incidents.</p>
           </div>
         </div>
 
@@ -491,6 +474,36 @@
           <div class="fact-body">
             <span class="label">Email</span>
             <span class="value">info AT resilix DOT hu</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-about" role="tabpanel" hidden>
+      <div class="panel-body">
+        <p class="body-text">Resilix was founded on more than 20 years of hands-on IT experience. Our goal is straightforward: to make resilient IT accessible to every business, at a time when systems face more risk than ever — from cyberattacks and outages to the everyday failures that come with running critical infrastructure.</p>
+
+        <span class="section-caption">Why Resilix</span>
+        <div class="focus-grid">
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Trust comes first.</h3>
+            <p>Every engagement starts with an honest conversation, not a sales pitch. We tell you what's actually needed, what can wait, and what it will cost — because a relationship built on trust is the only one that lasts.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Expertise across every layer of IT delivery.</h3>
+            <p>From networking and security to servers, storage, and backup, our team brings hands-on expertise across the full stack — so you're not stitching together specialists for every piece of the puzzle.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Reliability and accountability.</h3>
+            <p>We stay accountable for what we build long after go-live. If something needs attention, we're the ones who show up — not a support ticket that disappears into a queue.</p>
+          </div>
+          <div class="focus-card">
+            <div class="focus-icon"><span></span><span></span><span></span></div>
+            <h3>Resilience by design.</h3>
+            <p>Resilience isn't an afterthought we bolt on at the end — it's built into how we assess, plan, and deliver from day one, so your systems hold up when it matters most.</p>
           </div>
         </div>
       </div>
