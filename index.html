@@ -246,6 +246,20 @@
   .focus-card h3{ font-size:18px; font-weight:500; margin:0; color:var(--navy); }
   .focus-card p{ font-size:14px; line-height:1.7; color:var(--ink); margin:0; }
 
+  /* ---------- partner logos ---------- */
+  .partner-logos{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap: clamp(28px, 4vw, 44px);
+    margin-top: 36px;
+  }
+  .partner-logos img{
+    height: 52px;
+    width: auto;
+    display:block;
+  }
+
   /* ---------- contact ---------- */
   .contact-card{
     display:flex;
@@ -458,6 +472,10 @@
     <section class="panel" id="panel-work" role="tabpanel" hidden>
       <div class="panel-body">
         <p class="body-text">Under construction.</p>
+        <div class="partner-logos">
+          <img src="partner-dell.png" alt="Dell Technologies Authorized Partner">
+          <img src="partner-veeam.png" alt="Veeam Cloud &amp; Service Provider — Registered">
+        </div>
       </div>
     </section>
 
