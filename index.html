@@ -437,7 +437,7 @@
   @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(245,165,36,.55);} 100%{ box-shadow:0 0 0 10px rgba(245,165,36,0);} }
   .partner-logos{
     display:grid;
-    grid-template-columns:repeat(4, minmax(0,1fr));
+    grid-template-columns:repeat(5, minmax(0,1fr));
     gap:16px;
     margin-top:28px;
   }
@@ -453,6 +453,11 @@
   .partner-tile:hover{ transform:translateY(-3px); box-shadow:var(--shadow-lift); border-color:#C9D6E6; }
   .partner-tile img{ height:52px; width:auto; max-width:100%; object-fit:contain; display:block; }
   .partner-tile img.veeam{ height:92px; }
+  /* Cisco's badge is a self-contained square card (its own dark background
+     and border-radius), not a mark meant to float on white like the others,
+     so it fills the tile height instead of matching their 52px mark height. */
+  .partner-tile.badge{ padding:14px; }
+  .partner-tile img.cisco{ height:100%; width:100%; max-height:122px; }
 
   /* ================= contact ================= */
   .contact-grid{
@@ -731,6 +736,7 @@
           <div class="partner-tile"><img src="partner-veeam-vvar.png" alt="Veeam Value-Added Reseller — Registered" class="veeam"></div>
           <div class="partner-tile"><img src="partner-veeam.png" alt="Veeam Cloud &amp; Service Provider — Registered" class="veeam"></div>
           <div class="partner-tile"><img src="partner-fortinet.png" alt="Fortinet Engage Partner Program — Advocate Partner, Integrator" class="veeam"></div>
+          <div class="partner-tile badge"><img src="partner-cisco.svg" alt="Cisco Partner" class="cisco"></div>
         </div>
       </div>
     </section>
