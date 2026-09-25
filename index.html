@@ -44,7 +44,12 @@
     --ease: cubic-bezier(.2,.7,.2,1);
   }
   *{ box-sizing:border-box; }
-  html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; scroll-behavior:smooth; }
+  /* Always reserve the scrollbar's space so the layout (and the menu bar)
+     never shifts sideways when switching between short and long sections. */
+  html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; overflow-y:scroll; }
+  @supports (scrollbar-gutter: stable){
+    html{ overflow-y:auto; scrollbar-gutter:stable; }
+  }
   body{
     margin:0;
     min-height:100vh;
@@ -55,7 +60,7 @@
     font-family:var(--f-body);
     font-size:16px;
     line-height:1.6;
-    overflow-x:hidden;
+    overflow-x:clip; /* clip, not hidden: keeps the sticky menu bar working */
     -webkit-font-smoothing:antialiased;
   }
   img{ max-width:100%; }
@@ -145,8 +150,8 @@
     padding:clamp(24px, 4vw, 48px) var(--pad) clamp(64px, 9vw, 120px);
   }
   .panel{ width:100%; }
-  .panel:not([hidden]){ animation:panelIn .5s var(--ease) both; }
-  @keyframes panelIn{ from{ opacity:.001; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+  .panel:not([hidden]){ animation:panelIn .35s ease both; }
+  @keyframes panelIn{ from{ opacity:.001; } to{ opacity:1; } }
 
   /* ================= hero ================= */
   .hero{
@@ -529,7 +534,7 @@
   }
   @media (max-width: 720px){
     .focus-grid{ grid-template-columns:1fr; }
-    .site-head{ position:relative; top:auto; }
+    .head-inner{ gap:10px; padding-top:10px; padding-bottom:10px; }
     nav.tabs{ width:100%; justify-content:flex-start;
       -webkit-mask-image:linear-gradient(90deg, #000 86%, transparent); mask-image:linear-gradient(90deg, #000 86%, transparent); }
     nav.tabs button{ padding:9px 13px; font-size:11px; letter-spacing:1px; }
@@ -545,7 +550,6 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior:auto; }
     *, *::before, *::after{ animation:none !important; transition:none !important; }
     .streaks, .hero-visual::after{ display:none; }
     .focus-card:hover, .partner-tile:hover, .btn:hover{ transform:none !important; }
@@ -801,6 +805,16 @@
     var tabs = Array.prototype.slice.call(document.querySelectorAll('nav.tabs button'));
     var names = tabs.map(function(b){ return b.dataset.tab; });
     var head = document.querySelector('.site-head');
+    var nav = document.querySelector('nav.tabs');
+
+    // Keep the active tab visible inside the menu bar on narrow screens,
+    // scrolling the bar sideways only (never the page).
+    function revealTab(b){
+      if (nav.scrollWidth <= nav.clientWidth) return;
+      var left = b.offsetLeft - 8, right = b.offsetLeft + b.offsetWidth + 8;
+      if (left < nav.scrollLeft) nav.scrollLeft = left;
+      else if (right > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = right - nav.clientWidth;
+    }
 
     function show(name, opts){
       opts = opts || {};
@@ -809,37 +823,38 @@
         var on = b.dataset.tab === name;
         b.setAttribute('aria-selected', on ? 'true' : 'false');
         b.tabIndex = on ? 0 : -1;
-        if (on && opts.focus) b.focus();
-        if (on && b.scrollIntoView && opts.reveal) b.scrollIntoView({block:'nearest', inline:'nearest'});
+        if (on && opts.focus) b.focus({preventScroll:true});
+        if (on) revealTab(b);
       });
       document.querySelectorAll('.panel').forEach(function(p){ p.hidden = p.id !== 'panel-' + name; });
       if (opts.push !== false){
         try { history.replaceState(null, '', '#' + name); } catch(e){}
       }
-      if (opts.scrollTop) window.scrollTo({top:0, behavior:'smooth'});
+      // Every section opens at its top, instantly, directly under the menu bar.
+      if (opts.toTop !== false && window.scrollY > 0) window.scrollTo(0, 0);
     }
 
     tabs.forEach(function(btn, i){
-      btn.addEventListener('click', function(){ show(btn.dataset.tab, {reveal:true}); });
+      btn.addEventListener('click', function(){ show(btn.dataset.tab); });
       btn.addEventListener('keydown', function(e){
         var n = null;
         if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
         if (e.key === 'ArrowLeft')  n = tabs[(i - 1 + tabs.length) % tabs.length];
         if (e.key === 'Home') n = tabs[0];
         if (e.key === 'End')  n = tabs[tabs.length - 1];
-        if (n){ e.preventDefault(); show(n.dataset.tab, {focus:true, reveal:true}); }
+        if (n){ e.preventDefault(); show(n.dataset.tab, {focus:true}); }
       });
     });
 
     document.querySelectorAll('[data-go]').forEach(function(el){
       el.addEventListener('click', function(e){
         e.preventDefault();
-        show(el.dataset.go, {scrollTop:true, reveal:true});
+        show(el.dataset.go);
       });
     });
 
     var initial = (location.hash || '').replace('#','');
-    show(names.indexOf(initial) > -1 ? initial : 'introduction', {push:false});
+    show(names.indexOf(initial) > -1 ? initial : 'introduction', {push:false, toTop:false});
 
     window.addEventListener('hashchange', function(){
       show((location.hash || '').replace('#',''), {push:false});
